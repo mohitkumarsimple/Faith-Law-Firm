@@ -4,200 +4,1051 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Faith Law Firm | Justice Is Our Commitment</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,700;0,900;1,400&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
-        html { scroll-behavior: smooth; }
+        /* ── TOKENS ── */
+        :root {
+            --navy:    #0f1f3d;
+            --navy-lt: #1a3260;
+            --brass:   #b8933f;
+            --brass-lt:#d4aa55;
+            --maroon:  #7a1c2e;
+            --parchment:#f5f0e8;
+            --ink:     #1c1c1c;
+            --slate:   #4a5568;
+            --white:   #ffffff;
+            --rule:    rgba(184,147,63,0.35);
+        }
+
+        /* ── RESET ── */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; font-size: 16px; }
+        body { font-family: 'IBM Plex Sans', sans-serif; background: var(--parchment); color: var(--ink); }
+        img  { max-width: 100%; display: block; }
+        a    { text-decoration: none; color: inherit; }
+
+        /* ── TYPOGRAPHY ── */
+        h1,h2,h3,h4 { font-family: 'Fraunces', serif; }
+        .display   { font-size: clamp(2.4rem, 6vw, 4.8rem); font-weight: 900; line-height: 1.05; }
+        .headline  { font-size: clamp(1.6rem, 3.5vw, 2.6rem); font-weight: 700; line-height: 1.2; }
+        .subhead   { font-size: 1.1rem; font-weight: 500; letter-spacing: .04em; text-transform: uppercase; }
+        .body-lg   { font-size: 1.05rem; line-height: 1.75; color: var(--slate); }
+        .body-sm   { font-size: 0.9rem; line-height: 1.65; color: var(--slate); }
+
+        /* ── LAYOUT ── */
+        .container { max-width: 1180px; margin: 0 auto; padding: 0 1.5rem; }
+        .section   { padding: 6rem 0; }
+        .section--dark { background: var(--navy); color: var(--white); }
+        .section--mid  { background: #ede8de; }
+
+        /* ── DIVIDER ── */
+        .rule { display: block; width: 60px; height: 3px; background: var(--brass); margin: 1rem 0 1.5rem; }
+        .rule--center { margin-left: auto; margin-right: auto; }
+        .eyebrow { font-size: .78rem; letter-spacing: .12em; text-transform: uppercase; color: var(--brass); font-family: 'IBM Plex Sans', sans-serif; font-weight: 600; }
+
+        /* ══════════════════════════════
+           NAVBAR
+        ══════════════════════════════ */
+        .nav {
+            position: fixed; top: 0; left: 0; width: 100%; z-index: 100;
+            background: var(--navy);
+            border-bottom: 1px solid var(--rule);
+        }
+        .nav__inner {
+            display: flex; align-items: center; justify-content: space-between;
+            height: 68px; max-width: 1180px; margin: 0 auto; padding: 0 1.5rem;
+        }
+        .nav__brand {
+            font-family: 'Fraunces', serif;
+            font-size: 1.3rem; font-weight: 900; letter-spacing: .06em;
+            color: var(--white);
+        }
+        .nav__brand span { color: var(--brass); }
+        .nav__links { display: flex; gap: 2rem; list-style: none; }
+        .nav__links a {
+            font-size: .85rem; letter-spacing: .06em; text-transform: uppercase;
+            color: rgba(255,255,255,.75); font-weight: 500;
+            transition: color .2s;
+        }
+        .nav__links a:hover { color: var(--brass); }
+
+        /* mobile hamburger */
+        .nav__toggle { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
+        .nav__toggle span { width: 24px; height: 2px; background: var(--white); border-radius: 2px; transition: .3s; }
+        .nav__mobile { display: none; }
+        @media (max-width: 768px) {
+            .nav__links { display: none; }
+            .nav__toggle { display: flex; }
+            .nav__mobile {
+                position: fixed; top: 68px; left: 0; width: 100%;
+                background: var(--navy); padding: 1.5rem;
+                flex-direction: column; gap: 1rem; list-style: none;
+                border-top: 1px solid var(--rule);
+            }
+            .nav__mobile.open { display: flex; }
+            .nav__mobile a { color: rgba(255,255,255,.8); font-size: 1rem; letter-spacing: .05em; text-transform: uppercase; }
+        }
+
+        /* ══════════════════════════════
+           HERO
+        ══════════════════════════════ */
+        .hero {
+            padding-top: 68px;
+            background: var(--navy);
+            position: relative; overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute; inset: 0;
+            background: radial-gradient(ellipse at 70% 50%, rgba(184,147,63,.12) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .hero__inner {
+            display: grid; grid-template-columns: 1fr 1fr;
+            gap: 4rem; align-items: center;
+            padding: 7rem 1.5rem 6rem;
+            max-width: 1180px; margin: 0 auto;
+        }
+        .hero__text .eyebrow { margin-bottom: 1.2rem; }
+        .hero__title { color: var(--white); margin-bottom: 1.4rem; }
+        .hero__title em { font-style: italic; color: var(--brass); }
+        .hero__desc { color: rgba(255,255,255,.7); font-size: 1.05rem; line-height: 1.8; margin-bottom: 2.2rem; }
+        .hero__ctas { display: flex; gap: 1rem; flex-wrap: wrap; }
+        .btn {
+            display: inline-flex; align-items: center; gap: .5rem;
+            padding: .85rem 2rem; border-radius: 2px;
+            font-family: 'IBM Plex Sans', sans-serif;
+            font-size: .85rem; font-weight: 600; letter-spacing: .06em;
+            text-transform: uppercase; cursor: pointer; transition: .2s;
+            border: 2px solid transparent;
+        }
+        .btn--primary { background: var(--brass); color: var(--navy); border-color: var(--brass); }
+        .btn--primary:hover { background: var(--brass-lt); border-color: var(--brass-lt); }
+        .btn--outline { background: transparent; color: var(--white); border-color: rgba(255,255,255,.4); }
+        .btn--outline:hover { border-color: var(--white); }
+        .btn--maroon { background: var(--maroon); color: var(--white); border-color: var(--maroon); }
+        .btn--maroon:hover { background: #9a2538; }
+
+        /* hero emblem — the signature element */
+        .hero__emblem {
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            gap: 1.2rem; text-align: center;
+        }
+        .hero__seal {
+            width: 220px; height: 220px; border-radius: 50%;
+            border: 3px solid var(--brass);
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            background: rgba(184,147,63,.06);
+            position: relative;
+        }
+        .hero__seal::before {
+            content: '⚖'; font-size: 5rem; opacity: .85;
+            color: var(--brass);
+        }
+        .hero__seal-ring {
+            position: absolute; inset: -12px;
+            border-radius: 50%; border: 1px solid rgba(184,147,63,.3);
+        }
+        .hero__stats { display: flex; gap: 2.5rem; }
+        .hero__stat-num { font-family: 'Fraunces', serif; font-size: 2rem; font-weight: 900; color: var(--brass); }
+        .hero__stat-lbl { font-size: .75rem; text-transform: uppercase; letter-spacing: .08em; color: rgba(255,255,255,.55); margin-top: .2rem; }
+
+        @media (max-width: 900px) {
+            .hero__inner { grid-template-columns: 1fr; text-align: center; }
+            .hero__ctas { justify-content: center; }
+            .hero__emblem { display: none; }
+        }
+
+        /* ══════════════════════════════
+           CONTACT BANNER
+        ══════════════════════════════ */
+        .banner {
+            background: var(--maroon);
+            padding: .9rem 1.5rem; text-align: center;
+        }
+        .banner p { color: var(--white); font-size: .9rem; }
+        .banner strong { color: var(--brass-lt); }
+
+        /* ══════════════════════════════
+           ABOUT
+        ══════════════════════════════ */
+        .about__grid {
+            display: grid; grid-template-columns: 1fr 1fr;
+            gap: 5rem; align-items: start;
+        }
+        .about__quote {
+            border-left: 4px solid var(--brass);
+            padding: 1.8rem 2rem;
+            background: var(--navy);
+            border-radius: 0 4px 4px 0;
+            margin-top: 2rem;
+        }
+        .about__quote p { color: rgba(255,255,255,.85); font-style: italic; font-size: 1rem; line-height: 1.8; }
+        .about__quote cite { display: block; margin-top: 1rem; font-size: .8rem; color: var(--brass); letter-spacing: .06em; text-transform: uppercase; font-style: normal; }
+
+        .about__cards { display: flex; flex-direction: column; gap: 1.2rem; }
+        .about__card {
+            padding: 1.5rem 1.8rem;
+            border: 1px solid rgba(184,147,63,.3);
+            border-radius: 3px;
+            background: var(--white);
+        }
+        .about__card h4 { font-size: 1rem; color: var(--navy); margin-bottom: .5rem; }
+        .about__card p { font-size: .9rem; color: var(--slate); line-height: 1.65; }
+
+        @media (max-width: 768px) {
+            .about__grid { grid-template-columns: 1fr; gap: 2.5rem; }
+        }
+
+        /* ══════════════════════════════
+           PRACTICE AREAS
+        ══════════════════════════════ */
+        .practice__grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem; margin-top: 3rem;
+        }
+        .practice__card {
+            background: var(--white);
+            border-top: 3px solid var(--brass);
+            padding: 2rem 1.8rem;
+            border-radius: 0 0 4px 4px;
+            box-shadow: 0 2px 12px rgba(0,0,0,.06);
+            transition: transform .2s, box-shadow .2s;
+        }
+        .practice__card:hover { transform: translateY(-4px); box-shadow: 0 8px 28px rgba(0,0,0,.1); }
+        .practice__icon { font-size: 2rem; margin-bottom: 1rem; }
+        .practice__card h3 { font-size: 1.1rem; color: var(--navy); margin-bottom: .75rem; }
+        .practice__card p { font-size: .9rem; color: var(--slate); line-height: 1.65; }
+
+        /* ══════════════════════════════
+           FOUNDER / TEAM
+        ══════════════════════════════ */
+        .founder__grid {
+            display: grid; grid-template-columns: 1fr 2fr;
+            gap: 4rem; align-items: start;
+        }
+        .founder__portrait {
+            background: var(--navy-lt);
+            border: 2px solid var(--brass);
+            border-radius: 4px; overflow: hidden;
+            aspect-ratio: 3/4;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .founder__portrait-placeholder {
+            font-size: 6rem; opacity: .35; color: var(--white);
+        }
+        .founder__badge {
+            background: var(--brass); color: var(--navy);
+            font-size: .75rem; font-weight: 700; letter-spacing: .08em;
+            text-transform: uppercase; padding: .4rem 1rem;
+            display: inline-block; margin-bottom: 1rem;
+        }
+        .founder__bio p { margin-bottom: 1rem; }
+        .founder__quals { margin-top: 1.5rem; padding: 1.5rem; background: var(--parchment); border-left: 3px solid var(--navy); }
+        .founder__quals h4 { font-size: .85rem; text-transform: uppercase; letter-spacing: .08em; color: var(--navy); margin-bottom: .8rem; }
+        .founder__quals li { font-size: .9rem; color: var(--slate); margin-left: 1.2rem; margin-bottom: .4rem; }
+
+        .team__grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 1.5rem; margin-top: 3rem;
+        }
+        .team__card {
+            background: var(--white); border-radius: 3px;
+            padding: 2rem 1.5rem; text-align: center;
+            border-bottom: 3px solid var(--navy);
+        }
+        .team__avatar {
+            width: 80px; height: 80px; border-radius: 50%;
+            background: var(--navy-lt); margin: 0 auto 1rem;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 2rem; color: rgba(255,255,255,.4);
+            border: 2px solid var(--brass);
+        }
+        .team__card h4 { font-size: 1rem; color: var(--navy); margin-bottom: .3rem; }
+        .team__card p { font-size: .82rem; color: var(--slate); }
+
+        @media (max-width: 768px) {
+            .founder__grid { grid-template-columns: 1fr; }
+            .founder__portrait { aspect-ratio: 1; max-width: 200px; }
+        }
+
+        /* ══════════════════════════════
+           TESTIMONIALS
+        ══════════════════════════════ */
+        .testimonials__grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem; margin-top: 3rem;
+        }
+        .testimonial__card {
+            background: rgba(255,255,255,.07); border: 1px solid rgba(184,147,63,.25);
+            padding: 2rem; border-radius: 3px; position: relative;
+        }
+        .testimonial__card::before {
+            content: '\201C'; font-family: 'Fraunces', serif;
+            font-size: 5rem; line-height: 1; color: var(--brass); opacity: .3;
+            position: absolute; top: .5rem; left: 1.2rem;
+        }
+        .testimonial__card p { font-size: .95rem; color: rgba(255,255,255,.8); line-height: 1.75; margin-bottom: 1.2rem; font-style: italic; }
+        .testimonial__name { font-size: .8rem; font-weight: 600; letter-spacing: .07em; text-transform: uppercase; color: var(--brass); }
+        .testimonial__matter { font-size: .78rem; color: rgba(255,255,255,.4); margin-top: .25rem; }
+
+        /* ══════════════════════════════
+           JOIN US
+        ══════════════════════════════ */
+        .join__grid {
+            display: grid; grid-template-columns: 1fr 1fr;
+            gap: 2rem; margin-top: 3rem;
+        }
+        .join__card {
+            background: var(--white); padding: 2.5rem;
+            border-radius: 3px; border-top: 4px solid var(--navy);
+        }
+        .join__card.gold { border-top-color: var(--brass); }
+        .join__card h3 { font-size: 1.3rem; color: var(--navy); margin-bottom: 1rem; }
+        .join__card p  { font-size: .92rem; color: var(--slate); line-height: 1.7; margin-bottom: 1rem; }
+        .join__list { list-style: none; margin-bottom: 1.5rem; }
+        .join__list li { font-size: .88rem; color: var(--slate); padding: .35rem 0; padding-left: 1.2rem; position: relative; }
+        .join__list li::before { content: '✦'; position: absolute; left: 0; color: var(--brass); font-size: .7rem; top: .45rem; }
+
+        @media (max-width: 700px) { .join__grid { grid-template-columns: 1fr; } }
+
+        /* ══════════════════════════════
+           RESOURCES
+        ══════════════════════════════ */
+        .resources__grid {
+            display: grid; grid-template-columns: 1fr 1fr;
+            gap: 3rem; margin-top: 3rem;
+        }
+        .blog__list { list-style: none; }
+        .blog__item {
+            padding: 1.2rem 0; border-bottom: 1px solid rgba(184,147,63,.2);
+            display: flex; gap: 1rem; align-items: flex-start;
+        }
+        .blog__num { font-family: 'Fraunces', serif; font-size: 1.4rem; font-weight: 900; color: var(--brass); min-width: 2rem; }
+        .blog__title { font-size: .95rem; color: var(--navy); font-weight: 600; margin-bottom: .3rem; }
+        .blog__desc  { font-size: .83rem; color: var(--slate); line-height: 1.55; }
+
+        .pub__list { list-style: none; display: flex; flex-direction: column; gap: 1.2rem; }
+        .pub__item {
+            background: var(--white); padding: 1.5rem;
+            border-left: 3px solid var(--maroon);
+            border-radius: 0 3px 3px 0;
+        }
+        .pub__title { font-size: .95rem; font-weight: 700; color: var(--navy); margin-bottom: .4rem; }
+        .pub__desc  { font-size: .83rem; color: var(--slate); line-height: 1.6; }
+
+        @media (max-width: 768px) { .resources__grid { grid-template-columns: 1fr; } }
+
+        /* ══════════════════════════════
+           LLP GUIDE
+        ══════════════════════════════ */
+        .llp__steps {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 1.2rem; margin-top: 3rem;
+        }
+        .llp__step {
+            background: var(--white); padding: 1.8rem;
+            border-radius: 3px; border-left: 4px solid var(--brass);
+        }
+        .llp__step-num { font-family: 'Fraunces', serif; font-size: .8rem; font-weight: 700; color: var(--brass); letter-spacing: .1em; text-transform: uppercase; margin-bottom: .5rem; }
+        .llp__step h4 { font-size: 1rem; color: var(--navy); margin-bottom: .6rem; }
+        .llp__step p  { font-size: .87rem; color: var(--slate); line-height: 1.65; }
+        .llp__tip {
+            background: var(--navy); color: var(--white);
+            padding: 2rem; border-radius: 3px; margin-top: 1.5rem;
+            border-left: 4px solid var(--brass);
+        }
+        .llp__tip h4 { color: var(--brass); margin-bottom: .6rem; }
+        .llp__tip p  { font-size: .9rem; color: rgba(255,255,255,.8); line-height: 1.7; }
+
+        /* ══════════════════════════════
+           CONTACT
+        ══════════════════════════════ */
+        .contact__grid {
+            display: grid; grid-template-columns: 1fr 1.4fr;
+            gap: 4rem; align-items: start;
+        }
+        .contact__info-item { display: flex; gap: 1rem; align-items: flex-start; margin-bottom: 1.5rem; }
+        .contact__icon { font-size: 1.4rem; min-width: 2rem; color: var(--brass); }
+        .contact__info-item h4 { font-size: .85rem; text-transform: uppercase; letter-spacing: .07em; color: var(--navy); margin-bottom: .3rem; }
+        .contact__info-item p  { font-size: .9rem; color: var(--slate); }
+
+        .form { display: flex; flex-direction: column; gap: 1.2rem; }
+        .form__row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+        .form label { display: block; font-size: .8rem; letter-spacing: .06em; text-transform: uppercase; color: var(--navy); font-weight: 600; margin-bottom: .4rem; }
+        .form input, .form textarea, .form select {
+            width: 100%; padding: .8rem 1rem;
+            border: 1px solid rgba(15,31,61,.25); border-radius: 2px;
+            background: var(--white); font-family: 'IBM Plex Sans', sans-serif;
+            font-size: .9rem; color: var(--ink);
+            transition: border-color .2s;
+        }
+        .form input:focus, .form textarea:focus, .form select:focus {
+            outline: none; border-color: var(--brass);
+        }
+        .form textarea { resize: vertical; min-height: 130px; }
+        .form__note { font-size: .78rem; color: var(--slate); margin-top: .5rem; }
+
+        @media (max-width: 768px) {
+            .contact__grid { grid-template-columns: 1fr; }
+            .form__row { grid-template-columns: 1fr; }
+        }
+
+        /* ══════════════════════════════
+           FOOTER
+        ══════════════════════════════ */
+        .footer {
+            background: #08122a; color: rgba(255,255,255,.6);
+            padding: 4rem 1.5rem 2rem;
+        }
+        .footer__grid {
+            display: grid; grid-template-columns: 2fr 1fr 1fr 1.2fr;
+            gap: 3rem; max-width: 1180px; margin: 0 auto 3rem;
+        }
+        .footer__brand { font-family: 'Fraunces', serif; font-size: 1.4rem; font-weight: 900; color: var(--white); margin-bottom: .8rem; }
+        .footer__brand span { color: var(--brass); }
+        .footer__tagline { font-size: .85rem; line-height: 1.7; margin-bottom: 1.2rem; }
+        .footer__col h4 { font-size: .78rem; text-transform: uppercase; letter-spacing: .1em; color: var(--brass); font-weight: 700; margin-bottom: 1rem; }
+        .footer__col ul { list-style: none; }
+        .footer__col ul li { margin-bottom: .6rem; }
+        .footer__col ul a { font-size: .85rem; color: rgba(255,255,255,.55); transition: color .2s; }
+        .footer__col ul a:hover { color: var(--brass); }
+        .footer__bottom {
+            max-width: 1180px; margin: 0 auto;
+            border-top: 1px solid rgba(255,255,255,.08);
+            padding-top: 1.5rem; display: flex; justify-content: space-between;
+            flex-wrap: wrap; gap: 1rem;
+        }
+        .footer__bottom p { font-size: .8rem; }
+        .footer__disclaimer { font-size: .75rem; color: rgba(255,255,255,.35); max-width: 1180px; margin: 1.2rem auto 0; line-height: 1.6; }
+
+        @media (max-width: 768px) {
+            .footer__grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
+            .footer__bottom { flex-direction: column; }
+        }
+
+        /* ══════════════════════════════
+           SECTION HEADERS
+        ══════════════════════════════ */
+        .section-header { margin-bottom: 3.5rem; }
+        .section-header--center { text-align: center; }
+        .section-header--center .rule { margin-left: auto; margin-right: auto; }
+        .section-header h2 { margin-top: .5rem; }
+        .section-header p { margin-top: .8rem; max-width: 600px; }
+        .section-header--center p { margin-left: auto; margin-right: auto; }
+
     </style>
 </head>
-<body class="bg-slate-50 font-sans text-slate-800">
+<body>
 
-    <!-- Navigation -->
-    <nav class="bg-slate-900 text-white fixed w-full z-10 shadow-lg">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16 items-center">
-                <div class="font-bold text-2xl tracking-wider text-blue-400">FAITH LAW FIRM</div>
-                <div class="hidden md:flex space-x-6">
-                    <a href="#home" class="hover:text-blue-400 transition">Home</a>
-                    <a href="#about" class="hover:text-blue-400 transition">About</a>
-                    <a href="#practice-areas" class="hover:text-blue-400 transition">Practice Areas</a>
-                    <a href="#contact" class="hover:text-blue-400 transition">Contact Us</a>
-                    <a href="#join" class="hover:text-blue-400 transition">Join Us</a>
-                </div>
-            </div>
+<!-- ═══════════════════════════════════════
+     NAVIGATION
+═══════════════════════════════════════ -->
+<nav class="nav">
+    <div class="nav__inner">
+        <a href="#home" class="nav__brand">FAITH<span> LAW FIRM</span></a>
+        <ul class="nav__links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#practice-areas">Practice Areas</a></li>
+            <li><a href="#team">Team</a></li>
+            <li><a href="#testimonials">Testimonials</a></li>
+            <li><a href="#join">Join Us</a></li>
+            <li><a href="#resources">Resources</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+        <div class="nav__toggle" onclick="document.querySelector('.nav__mobile').classList.toggle('open')">
+            <span></span><span></span><span></span>
         </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <section id="home" class="pt-24 pb-12 bg-slate-900 text-white text-center">
-        <div class="max-w-4xl mx-auto px-4 py-16">
-            <h1 class="text-4xl md:text-6xl font-extrabold mb-6">Justice Is Not Just a Word.<br><span class="text-blue-500">It Is Our Commitment.</span></h1>
-            <p class="text-lg md:text-xl text-slate-300 mb-8">Faith Law Firm is a full-service legal chamber dedicated to protecting your rights, resolving disputes, and delivering results across civil courts, consumer forums, commercial tribunals, and international arbitration.</p>
-            <div class="flex justify-center gap-4">
-                <a href="#contact" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition">Book a Free Consultation</a>
-                <a href="#practice-areas" class="bg-transparent border border-white hover:bg-white hover:text-slate-900 font-bold py-3 px-6 rounded-lg transition">Explore Practice Areas</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Banner -->
-    <div class="bg-blue-600 text-white py-4 text-center">
-        <p class="font-semibold text-lg">Talk to a Lawyer Today - No Obligation, No Fees for First Consultation</p>
-        <p class="text-sm mt-1">Phone: +91-XXXXXXXXXX | Email: info@faithlawfirm.com | Office: Delhi (Mon-Sat, 10 AM - 6 PM)</p>
     </div>
+    <ul class="nav__mobile">
+        <li><a href="#home" onclick="this.closest('.nav__mobile').classList.remove('open')">Home</a></li>
+        <li><a href="#about" onclick="this.closest('.nav__mobile').classList.remove('open')">About</a></li>
+        <li><a href="#practice-areas" onclick="this.closest('.nav__mobile').classList.remove('open')">Practice Areas</a></li>
+        <li><a href="#team" onclick="this.closest('.nav__mobile').classList.remove('open')">Team</a></li>
+        <li><a href="#testimonials" onclick="this.closest('.nav__mobile').classList.remove('open')">Testimonials</a></li>
+        <li><a href="#join" onclick="this.closest('.nav__mobile').classList.remove('open')">Join Us</a></li>
+        <li><a href="#resources" onclick="this.closest('.nav__mobile').classList.remove('open')">Resources</a></li>
+        <li><a href="#contact" onclick="this.closest('.nav__mobile').classList.remove('open')">Contact</a></li>
+    </ul>
+</nav>
 
-    <!-- About Section -->
-    <section id="about" class="py-16 max-w-7xl mx-auto px-4">
-        <div class="text-center mb-12">
-            <h2 class="text-3xl font-bold text-slate-900">Who We Are</h2>
-            <div class="w-20 h-1 bg-blue-600 mx-auto mt-4"></div>
+<!-- ═══════════════════════════════════════
+     HERO
+═══════════════════════════════════════ -->
+<section id="home" class="hero">
+    <div class="hero__inner">
+        <div class="hero__text">
+            <p class="eyebrow">Delhi's Trusted Legal Chamber</p>
+            <h1 class="display hero__title">Justice Is Not<br>Just a Word.<br><em>It Is Our Commitment.</em></h1>
+            <p class="hero__desc">Faith Law Firm is a full-service legal chamber dedicated to protecting your rights, resolving disputes, and delivering results — across civil courts, consumer forums, commercial tribunals, and international arbitration. We practise with integrity. We argue with conviction.</p>
+            <div class="hero__ctas">
+                <a href="#contact" class="btn btn--primary">Book Free Consultation</a>
+                <a href="#practice-areas" class="btn btn--outline">Our Practice Areas</a>
+            </div>
         </div>
-        <div class="grid md:grid-cols-2 gap-12 items-center">
+        <div class="hero__emblem">
+            <div class="hero__seal">
+                <div class="hero__seal-ring"></div>
+            </div>
+            <div class="hero__stats">
+                <div>
+                    <div class="hero__stat-num">10+</div>
+                    <div class="hero__stat-lbl">Practice Areas</div>
+                </div>
+                <div>
+                    <div class="hero__stat-num">Delhi</div>
+                    <div class="hero__stat-lbl">Based Chamber</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Banner -->
+<div class="banner">
+    <p><strong>Talk to a Lawyer Today</strong> — No Obligation, No Fees for First Consultation &nbsp;|&nbsp; 📞 +91-XXXXXXXXXX &nbsp;|&nbsp; ✉ info@faithlawfirm.com &nbsp;|&nbsp; Mon–Sat, 10 AM – 6 PM</p>
+</div>
+
+<!-- ═══════════════════════════════════════
+     ABOUT
+═══════════════════════════════════════ -->
+<section id="about" class="section">
+    <div class="container">
+        <div class="section-header">
+            <p class="eyebrow">About the Chamber</p>
+            <span class="rule"></span>
+            <h2 class="headline">Built on Principle.<br>Driven by Purpose.</h2>
+        </div>
+        <div class="about__grid">
             <div>
-                <p class="text-lg text-slate-700 leading-relaxed mb-4">Faith Law Firm is a Delhi-based legal chamber built on the values of faith, integrity, and excellence. Founded by <strong>Adv. Mohit Gautam</strong>, we operate with a team of experienced advocates sharing one goal: your justice.</p>
-                <p class="text-lg text-slate-700 leading-relaxed mb-4">Adv. Gautam's approach to law is human-centred. He believes that a lawyer's first duty is to listen. We explain your case plainly, pursue it aggressively, and keep you informed at every stage.</p>
+                <p class="body-lg">Faith Law Firm is a Delhi-based legal chamber with a commitment to delivering principled, practical, and result-oriented legal services. Founded by <strong>Adv. Mohit Gautam</strong>, the firm operates with a team of experienced advocates, legal researchers, and interns who share one common goal — your justice.</p>
+                <p class="body-lg" style="margin-top:1rem;">We handle matters before the Delhi District Courts, Consumer Disputes Commissions, Commercial Courts, and assist in matters before International Arbitration Tribunals and IP authorities. Our practice spans individuals, families, startups, established businesses, and international clients.</p>
+                <div class="about__quote">
+                    <p>"The law exists to protect people. Every statute, every precedent, every legal argument we make is in service of that idea. We do not treat cases as files — we treat them as lives, livelihoods, and futures that matter."</p>
+                    <cite>— Adv. Mohit Gautam, Founder</cite>
+                </div>
             </div>
-            <div class="bg-slate-200 p-8 rounded-xl shadow-inner border-l-4 border-blue-600">
-                <h3 class="text-xl font-bold mb-4">Our Philosophy</h3>
-                <p class="text-slate-700 italic">"The law exists to protect people. Every statute, every precedent, every legal argument we make is in service of that idea. We do not treat cases as files—we treat them as lives, livelihoods, and futures that matter."</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Practice Areas Section -->
-    <section id="practice-areas" class="py-16 bg-slate-100">
-        <div class="max-w-7xl mx-auto px-4">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl font-bold text-slate-900">Our Expertise</h2>
-                <div class="w-20 h-1 bg-blue-600 mx-auto mt-4"></div>
-            </div>
-            <div class="grid md:grid-cols-3 gap-6">
-                <!-- Tile 1 -->
-                <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition">
-                    <h3 class="font-bold text-xl mb-2 text-blue-900">I.P.R. & Litigation</h3>
-                    <p class="text-slate-600 mb-4">Protecting trademarks, patents, copyrights, and trade secrets under Indian and international law.</p>
+            <div class="about__cards">
+                <div class="about__card">
+                    <h4>🏛 Our Philosophy</h4>
+                    <p>We believe every client deserves clarity, transparency, and dedication — not just legal jargon. We explain your case plainly, pursue it aggressively, and keep you informed at every stage.</p>
                 </div>
-                <!-- Tile 2 -->
-                <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition">
-                    <h3 class="font-bold text-xl mb-2 text-blue-900">Civil Litigation</h3>
-                    <p class="text-slate-600 mb-4">Handling disputes relating to land, inheritance, tenancy, and possession before all levels of courts.</p>
+                <div class="about__card">
+                    <h4>⚖ Our Promise</h4>
+                    <p>Faith Law Firm maintains the highest standards of professional ethics. We are committed to honest, transparent, and accessible legal services — building long-term relationships with every client.</p>
                 </div>
-                <!-- Tile 3 -->
-                <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition">
-                    <h3 class="font-bold text-xl mb-2 text-blue-900">Arbitration</h3>
-                    <p class="text-slate-600 mb-4">Resolving disputes outside traditional courts swiftly and confidentially in domestic and international proceedings.</p>
+                <div class="about__card">
+                    <h4>🌐 Our Reach</h4>
+                    <p>From District Courts in Delhi to International Arbitration Tribunals and IP offices worldwide — we are equipped to represent you wherever your matter demands.</p>
                 </div>
-                <!-- Tile 4 -->
-                <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition">
-                    <h3 class="font-bold text-xl mb-2 text-blue-900">Family Issues</h3>
-                    <p class="text-slate-600 mb-4">Sensitive handling of divorce, custody, maintenance, and domestic violence matters.</p>
-                </div>
-                 <!-- Tile 5 -->
-                 <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition">
-                    <h3 class="font-bold text-xl mb-2 text-blue-900">Consumer Court</h3>
-                    <p class="text-slate-600 mb-4">Representing clients against unfair trade practices and deficient services before District, State, and National commissions.</p>
-                </div>
-                 <!-- Tile 6 -->
-                 <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition">
-                    <h3 class="font-bold text-xl mb-2 text-blue-900">Criminal Matters</h3>
-                    <p class="text-slate-600 mb-4">Bail applications, FIR quashing, and trial defence before Sessions and High Courts.</p>
+                <div class="about__card">
+                    <h4>📚 Our Infrastructure</h4>
+                    <p>A dedicated case management system, in-house legal library, and a digitally enabled practice allow us to serve clients across Delhi — remotely and in-person.</p>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- Join Us Section -->
-    <section id="join" class="py-16 max-w-7xl mx-auto px-4">
-        <div class="bg-slate-900 rounded-2xl p-8 md:p-12 text-white text-center">
-            <h2 class="text-3xl font-bold mb-4">Join Faith Law Firm</h2>
-            <p class="text-slate-300 mb-8 max-w-2xl mx-auto">We are always looking for talented, principled individuals. Whether you are an enrolled advocate seeking a collaborative environment or a law student eager for real-world internship exposure.</p>
-            <div class="flex flex-col sm:flex-row justify-center gap-4">
-                <a href="mailto:careers@faithlawfirm.com" class="bg-blue-600 hover:bg-blue-500 py-3 px-8 rounded-lg font-bold">Apply as Advocate</a>
-                <a href="mailto:internship@faithlawfirm.com" class="bg-white text-slate-900 hover:bg-slate-200 py-3 px-8 rounded-lg font-bold">Apply as Intern</a>
+<!-- ═══════════════════════════════════════
+     PRACTICE AREAS
+═══════════════════════════════════════ -->
+<section id="practice-areas" class="section section--mid">
+    <div class="container">
+        <div class="section-header section-header--center">
+            <p class="eyebrow">What We Do</p>
+            <span class="rule rule--center"></span>
+            <h2 class="headline">Our Expertise</h2>
+            <p class="body-lg">From intellectual property to courtroom litigation — a full-service practice covering every corner of the law.</p>
+        </div>
+        <div class="practice__grid">
+            <div class="practice__card">
+                <div class="practice__icon">📝</div>
+                <h3>I.P.R. & Litigation</h3>
+                <p>Protecting trademarks, patents, copyrights, and trade secrets under Indian law and international conventions — from filing and prosecution to infringement litigation.</p>
+            </div>
+            <div class="practice__card">
+                <div class="practice__icon">🌍</div>
+                <h3>International Trademark Registration</h3>
+                <p>Registering trademarks across multiple jurisdictions through the Madrid Protocol. From Indian startups expanding overseas to foreign companies entering India.</p>
+            </div>
+            <div class="practice__card">
+                <div class="practice__icon">🤝</div>
+                <h3>Arbitration</h3>
+                <p>Domestic and international arbitration proceedings including ICC, LCIA, and ad-hoc arbitration — resolving disputes swiftly, confidentially, and efficiently.</p>
+            </div>
+            <div class="practice__card">
+                <div class="practice__icon">⚖</div>
+                <h3>Civil Litigation</h3>
+                <p>Property disputes, contractual disagreements, recovery suits, injunctions, and declaratory suits before Delhi District Courts and High Court.</p>
+            </div>
+            <div class="practice__card">
+                <div class="practice__icon">💼</div>
+                <h3>Commercial Suits</h3>
+                <p>Disputes before Commercial Courts under the Commercial Courts Act, 2015 — partnerships, joint ventures, shareholders, trade contracts, and foreign judgment enforcement.</p>
+            </div>
+            <div class="practice__card">
+                <div class="practice__icon">📋</div>
+                <h3>Licence & Compliances</h3>
+                <p>FSSAI, Shop & Establishment, GST, IEC, and all necessary licences. FDI regulations, corporate governance, and company incorporation for foreign nationals.</p>
+            </div>
+            <div class="practice__card">
+                <div class="practice__icon">👨‍👩‍👧</div>
+                <h3>Family Issues</h3>
+                <p>Divorce, child custody, maintenance, domestic violence, matrimonial property disputes, and adoption — handled with sensitivity and legal precision.</p>
+            </div>
+            <div class="practice__card">
+                <div class="practice__icon">🔒</div>
+                <h3>Criminal Matters</h3>
+                <p>Bail applications, anticipatory bail, FIR quashing petitions, trial defence, and representation before Sessions Courts and High Courts.</p>
+            </div>
+            <div class="practice__card">
+                <div class="practice__icon">🛒</div>
+                <h3>Consumer Court</h3>
+                <p>Representing clients before DCDRC, State Commission, and NCDRC for deficient services, unfair trade practices, and compensation claims.</p>
+            </div>
+            <div class="practice__card">
+                <div class="practice__icon">🏦</div>
+                <h3>Banking Law</h3>
+                <p>Loan recovery matters, debt restructuring, cheque dishonour cases under Section 138 NI Act, credit card fraud, and enforcement of security interests.</p>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- Contact Us Section -->
-    <section id="contact" class="py-16 bg-slate-100">
-        <div class="max-w-4xl mx-auto px-4">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl font-bold text-slate-900">Get in Touch</h2>
-                <div class="w-20 h-1 bg-blue-600 mx-auto mt-4"></div>
-                <p class="mt-4 text-slate-600">All communications are strictly confidential and protected by attorney-client privilege.</p>
+<!-- ═══════════════════════════════════════
+     FOUNDER
+═══════════════════════════════════════ -->
+<section id="founder" class="section">
+    <div class="container">
+        <div class="section-header">
+            <p class="eyebrow">About the Founder</p>
+            <span class="rule"></span>
+            <h2 class="headline">Adv. Mohit Gautam</h2>
+        </div>
+        <div class="founder__grid">
+            <div>
+                <div class="founder__portrait">
+                    <div class="founder__portrait-placeholder">👤</div>
+                </div>
+                <div style="margin-top:1rem;">
+                    <div class="founder__badge">Principal Advocate & Founder</div>
+                </div>
+                <div class="founder__quals">
+                    <h4>Qualifications</h4>
+                    <ul>
+                        <li>LL.B. — [University Name]</li>
+                        <li>Enrolled with Bar Council of Delhi</li>
+                        <li>Member, [Relevant Bar Associations]</li>
+                    </ul>
+                </div>
             </div>
-            
-            <div class="bg-white rounded-xl shadow-lg p-8">
-                <form action="#" method="POST" class="space-y-6">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="founder__bio">
+                <p class="body-lg">Adv. Mohit Gautam is the founder and driving force behind Faith Law Firm. With years of rigorous courtroom experience and a deep understanding of both substantive and procedural law, Adv. Gautam has built a reputation as a thorough, principled, and effective advocate.</p>
+                <p class="body-lg">His practice spans civil and commercial litigation, intellectual property law, consumer protection, family law, and criminal defence. He appears regularly before the Delhi District Courts and has advised clients on matters involving arbitration, business compliance, and international IP registration.</p>
+                <p class="body-lg">Adv. Gautam's approach to law is human-centred. He believes that a lawyer's first duty is to listen — to truly understand the client's situation before offering advice. He is known for explaining complex legal issues in plain language and for standing by his clients through every stage of their matter, from the first consultation to the final verdict.</p>
+                <p class="body-lg">Outside the courtroom, Adv. Gautam is passionate about legal education and access to justice. He regularly mentors young law graduates and interns, helping shape the next generation of legal professionals.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     TEAM
+═══════════════════════════════════════ -->
+<section id="team" class="section section--mid">
+    <div class="container">
+        <div class="section-header section-header--center">
+            <p class="eyebrow">Our People</p>
+            <span class="rule rule--center"></span>
+            <h2 class="headline">The Strength of Faith Law Firm</h2>
+            <p class="body-lg">A law firm is only as strong as its people. Our team brings collective expertise across multiple domains of law.</p>
+        </div>
+        <div class="team__grid">
+            <div class="team__card">
+                <div class="team__avatar">👤</div>
+                <h4>Associate Advocates</h4>
+                <p>Experienced courtroom support, legal drafting, and client communication across all practice areas.</p>
+            </div>
+            <div class="team__card">
+                <div class="team__avatar">📚</div>
+                <h4>Legal Researchers</h4>
+                <p>Tracking evolving case law, amendments, and regulatory updates — preparing research memos that give our advocates a decisive edge.</p>
+            </div>
+            <div class="team__card">
+                <div class="team__avatar">🗂</div>
+                <h4>Administrative Staff</h4>
+                <p>Scheduling, deadlines, filing, and records — trained in confidentiality and professional client service.</p>
+            </div>
+            <div class="team__card">
+                <div class="team__avatar">🎓</div>
+                <h4>Interns</h4>
+                <p>Law students integrated into live matters — drafting, research, court visits, and client interaction under close supervision.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     TESTIMONIALS
+═══════════════════════════════════════ -->
+<section id="testimonials" class="section section--dark">
+    <div class="container">
+        <div class="section-header section-header--center">
+            <p class="eyebrow">Client Testimonials</p>
+            <span class="rule rule--center"></span>
+            <h2 class="headline" style="color:var(--white);">What Our Clients Say</h2>
+        </div>
+        <div class="testimonials__grid">
+            <div class="testimonial__card">
+                <p>Adv. Gautam handled my property dispute with remarkable thoroughness. He explained every stage of the case clearly and was always available when I needed him. The matter was resolved favourably.</p>
+                <div class="testimonial__name">[Client Name]</div>
+                <div class="testimonial__matter">Civil Litigation · Delhi</div>
+            </div>
+            <div class="testimonial__card">
+                <p>I had been struggling with a consumer complaint for months. Faith Law Firm filed my case before the DCDRC and ensured I received full compensation within a few months. Professional and genuinely caring.</p>
+                <div class="testimonial__name">[Client Name]</div>
+                <div class="testimonial__matter">Consumer Court Matter</div>
+            </div>
+            <div class="testimonial__card">
+                <p>The firm helped us register our trademark both in India and internationally. Their knowledge of IP law is impressive, and they made what seemed like a complicated process completely manageable.</p>
+                <div class="testimonial__name">[Client Name]</div>
+                <div class="testimonial__matter">IPR & Trademark · Startup Founder</div>
+            </div>
+            <div class="testimonial__card">
+                <p>I was going through a difficult divorce and needed someone who understood both the law and the emotional side of the process. Strong legal support and genuine human empathy — exactly what I needed.</p>
+                <div class="testimonial__name">[Client Name]</div>
+                <div class="testimonial__matter">Family Law Matter</div>
+            </div>
+            <div class="testimonial__card">
+                <p>Excellent team for banking and cheque dishonour matters. They were quick, strategic, and kept me updated throughout. Highly recommended for any business facing NI Act disputes.</p>
+                <div class="testimonial__name">[Client Name]</div>
+                <div class="testimonial__matter">Banking Law · Business Client</div>
+            </div>
+            <div class="testimonial__card">
+                <p>Faith Law Firm represented us in international arbitration and achieved an outcome we did not expect. Their preparation and command of the process was exceptional from start to finish.</p>
+                <div class="testimonial__name">[Client Name]</div>
+                <div class="testimonial__matter">International Arbitration</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     JOIN US
+═══════════════════════════════════════ -->
+<section id="join" class="section">
+    <div class="container">
+        <div class="section-header section-header--center">
+            <p class="eyebrow">Careers</p>
+            <span class="rule rule--center"></span>
+            <h2 class="headline">Join Faith Law Firm</h2>
+            <p class="body-lg">We are always looking for talented, motivated, and principled individuals — seasoned advocates and ambitious law students alike.</p>
+        </div>
+        <div class="join__grid">
+            <div class="join__card">
+                <h3>⚖ Join as an Advocate</h3>
+                <p>We are looking for associate advocates who are passionate about the law and committed to client service — enrolled with the Bar Council, with a strong foundation in one or more of our practice areas.</p>
+                <p><strong>What we offer:</strong></p>
+                <ul class="join__list">
+                    <li>Exposure to diverse practice areas and real court experience</li>
+                    <li>Mentorship from senior advocates</li>
+                    <li>Collaborative, respectful work culture</li>
+                    <li>Competitive remuneration based on experience</li>
+                    <li>Opportunities to grow into a senior role</li>
+                </ul>
+                <p><strong>What we expect:</strong></p>
+                <ul class="join__list">
+                    <li>Strong legal drafting and research skills</li>
+                    <li>Court presence and communication ability</li>
+                    <li>Integrity, punctuality, and client sensitivity</li>
+                </ul>
+                <a href="mailto:careers@faithlawfirm.com" class="btn btn--primary" style="margin-top:.5rem;">Apply as Advocate →</a>
+            </div>
+            <div class="join__card gold">
+                <h3>🎓 Join as an Intern</h3>
+                <p>Our internship programme is designed to give you real exposure — not just a certificate. Interns work on live cases, draft actual legal documents, attend court proceedings, and learn what it means to practise law.</p>
+                <p><strong>Who can apply:</strong></p>
+                <ul class="join__list">
+                    <li>Law students (3-year LLB or 5-year BA LLB) from any recognised law school</li>
+                    <li>2nd year or above preferred</li>
+                    <li>Delhi-based or willing to attend in-person</li>
+                </ul>
+                <p><strong>What you will learn:</strong></p>
+                <ul class="join__list">
+                    <li>Legal drafting — petitions, applications, notices, agreements</li>
+                    <li>Court procedure and filing at Delhi District Courts</li>
+                    <li>Case research and preparation of legal memos</li>
+                    <li>Basics of e-filing portals (e-Daakhil, eCourts)</li>
+                </ul>
+                <p style="font-size:.85rem;color:var(--slate);"><strong>Duration:</strong> Minimum 4 weeks &nbsp;|&nbsp; <strong>Stipend:</strong> Performance-based for 4+ weeks</p>
+                <a href="mailto:internship@faithlawfirm.com" class="btn btn--maroon" style="margin-top:.8rem;">Apply as Intern →</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     RESOURCES
+═══════════════════════════════════════ -->
+<section id="resources" class="section section--mid">
+    <div class="container">
+        <div class="section-header section-header--center">
+            <p class="eyebrow">Knowledge Centre</p>
+            <span class="rule rule--center"></span>
+            <h2 class="headline">Resources</h2>
+            <p class="body-lg">An informed client is an empowered client. Our resources make legal knowledge accessible to everyone.</p>
+        </div>
+        <div class="resources__grid">
+            <div>
+                <h3 class="subhead" style="color:var(--navy);margin-bottom:1.2rem;">📰 Latest Blogs</h3>
+                <ul class="blog__list">
+                    <li class="blog__item">
+                        <span class="blog__num">01</span>
+                        <div><div class="blog__title">How to File a Consumer Complaint Using e-Daakhil</div><div class="blog__desc">Step-by-step guide to online consumer grievance filing in India.</div></div>
+                    </li>
+                    <li class="blog__item">
+                        <span class="blog__num">02</span>
+                        <div><div class="blog__title">Your Rights When a Company Refuses a Refund</div><div class="blog__desc">What the Consumer Protection Act, 2019 says — and how to act.</div></div>
+                    </li>
+                    <li class="blog__item">
+                        <span class="blog__num">03</span>
+                        <div><div class="blog__title">International Trademark via Madrid Protocol — Explained Simply</div><div class="blog__desc">How to protect your brand across borders without the jargon.</div></div>
+                    </li>
+                    <li class="blog__item">
+                        <span class="blog__num">04</span>
+                        <div><div class="blog__title">Section 138 NI Act — Everything on Cheque Bounce Cases</div><div class="blog__desc">Rights, timelines, remedies, and what to do next.</div></div>
+                    </li>
+                    <li class="blog__item">
+                        <span class="blog__num">05</span>
+                        <div><div class="blog__title">Mutual Consent Divorce — Procedure, Timeline & What to Expect</div><div class="blog__desc">A plain-language guide to the most common divorce route in India.</div></div>
+                    </li>
+                    <li class="blog__item">
+                        <span class="blog__num">06</span>
+                        <div><div class="blog__title">Incorporation of a Company by a Foreign National in India</div><div class="blog__desc">FDI norms, RBI approvals, MCA filings — a complete primer.</div></div>
+                    </li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="subhead" style="color:var(--navy);margin-bottom:1.2rem;">📄 Publications</h3>
+                <ul class="pub__list">
+                    <li class="pub__item">
+                        <div class="pub__title">Evolving Standards of Consumer Protection in the Digital Economy</div>
+                        <div class="pub__desc">Analysis of the Consumer Protection Act, 2019 applied to e-commerce, online bookings, and digital service providers.</div>
+                    </li>
+                    <li class="pub__item">
+                        <div class="pub__title">Arbitration in India Post-2015 Amendments</div>
+                        <div class="pub__desc">How the 2015 and 2019 Arbitration Amendment Acts have transformed India's dispute resolution landscape.</div>
+                    </li>
+                    <li class="pub__item">
+                        <div class="pub__title">Trademark Dilution & Online Brand Impersonation</div>
+                        <div class="pub__desc">Emerging challenges in brand protection — social media, domain squatting, and e-commerce counterfeiting.</div>
+                    </li>
+                    <li class="pub__item">
+                        <div class="pub__title">FDI & Company Incorporation in India — A Legal Primer for Non-Residents</div>
+                        <div class="pub__desc">FEMA regulations, RBI approvals, MCA filings, and compliance requirements for foreign nationals setting up in India.</div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- LLP Guide -->
+        <div style="margin-top:4rem;">
+            <div class="section-header section-header--center">
+                <p class="eyebrow">Legal Guide</p>
+                <span class="rule rule--center"></span>
+                <h2 class="headline">Registering an LLP in India</h2>
+                <p class="body-lg">A complete step-by-step guide to registering a Limited Liability Partnership for a Law Firm.</p>
+            </div>
+            <div class="llp__steps">
+                <div class="llp__step">
+                    <div class="llp__step-num">Step 01 & 02</div>
+                    <h4>Planning & Digital Signature</h4>
+                    <p>Choose the LLP name, partners (minimum 2), designated partners, and office address. Ensure compliance with Bar Council rules. Each designated partner needs a Class 3 DSC, PAN, Aadhaar, photo, email, and mobile.</p>
+                </div>
+                <div class="llp__step">
+                    <div class="llp__step-num">Step 03 & 04</div>
+                    <h4>Name Reservation & Incorporation</h4>
+                    <p>Search the MCA database to avoid identical names and check trademark availability. Prepare the FILLIP form with partner details, office proof, NOC, business object, and DIN allotment if needed.</p>
+                </div>
+                <div class="llp__step">
+                    <div class="llp__step-num">Step 05 & 06</div>
+                    <h4>Documents & LLP Agreement</h4>
+                    <p>Gather PAN, Aadhaar, address proof, photo, and rent agreement/NOC. Execute the LLP Agreement within 30 days of incorporation, covering capital, profit ratio, dispute resolution, and dissolution rules.</p>
+                </div>
+                <div class="llp__step">
+                    <div class="llp__step-num">Step 07 & 08</div>
+                    <h4>MCA Filing & PAN/TAN/Bank</h4>
+                    <p>File Form 3 within 30 days after incorporation. Obtain PAN/TAN, open a bank account using the COI, PAN, LLP Agreement, and KYC. Register for GST if applicable.</p>
+                </div>
+            </div>
+            <div class="llp__tip">
+                <h4>Annual Compliance & Practical Tips</h4>
+                <p>Maintain proper books of accounts and file Form 11 (Annual Return), Form 8 (Statement of Accounts), and Income Tax Return annually. Comply with TDS/GST obligations throughout the year. Keep digital records, use professional email addresses, draft clear engagement letters, maintain strict client confidentiality, and consider obtaining professional indemnity insurance to safeguard the firm and its clients.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     CONTACT
+═══════════════════════════════════════ -->
+<section id="contact" class="section">
+    <div class="container">
+        <div class="section-header">
+            <p class="eyebrow">Get in Touch</p>
+            <span class="rule"></span>
+            <h2 class="headline">We Are Here for You</h2>
+            <p class="body-lg">Legal problems can feel overwhelming. The first step — reaching out — is often the hardest. We make that step easy.</p>
+        </div>
+        <div class="contact__grid">
+            <div>
+                <div class="contact__info-item">
+                    <div class="contact__icon">📍</div>
+                    <div>
+                        <h4>Office Address</h4>
+                        <p>Faith Law Firm<br>[Full Office Address]<br>Delhi — [PIN Code]</p>
+                    </div>
+                </div>
+                <div class="contact__info-item">
+                    <div class="contact__icon">📞</div>
+                    <div>
+                        <h4>Phone</h4>
+                        <p>+91-XXXXXXXXXX</p>
+                    </div>
+                </div>
+                <div class="contact__info-item">
+                    <div class="contact__icon">✉</div>
+                    <div>
+                        <h4>Email</h4>
+                        <p>info@faithlawfirm.com</p>
+                    </div>
+                </div>
+                <div class="contact__info-item">
+                    <div class="contact__icon">🕐</div>
+                    <div>
+                        <h4>Working Hours</h4>
+                        <p>Monday – Saturday<br>10:00 AM – 6:00 PM</p>
+                    </div>
+                </div>
+                <div class="contact__info-item">
+                    <div class="contact__icon">💬</div>
+                    <div>
+                        <h4>Consultation Options</h4>
+                        <p>By appointment · Walk-in · Virtual (video call)</p>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="form">
+                    <div class="form__row">
                         <div>
-                            <label class="block text-sm font-medium text-slate-700">Full Name</label>
-                            <input type="text" required class="mt-1 block w-full rounded-md border-slate-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 border p-2">
+                            <label>Full Name</label>
+                            <input type="text" placeholder="Your full name">
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-slate-700">Email Address</label>
-                            <input type="email" required class="mt-1 block w-full rounded-md border-slate-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 border p-2">
+                            <label>Phone Number</label>
+                            <input type="tel" placeholder="+91-XXXXXXXXXX">
                         </div>
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-slate-700">Phone Number</label>
-                        <input type="tel" required class="mt-1 block w-full rounded-md border-slate-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 border p-2">
+                        <label>Email Address</label>
+                        <input type="email" placeholder="you@email.com">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-slate-700">Subject / Brief Description</label>
-                        <textarea rows="4" required class="mt-1 block w-full rounded-md border-slate-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 border p-2"></textarea>
+                        <label>Area of Legal Matter</label>
+                        <select>
+                            <option value="">Select a practice area</option>
+                            <option>IPR & Litigation</option>
+                            <option>International Trademark</option>
+                            <option>Arbitration</option>
+                            <option>Civil Litigation</option>
+                            <option>Commercial Suit</option>
+                            <option>Licence & Compliances</option>
+                            <option>Family Issues</option>
+                            <option>Criminal Matters</option>
+                            <option>Consumer Court</option>
+                            <option>Banking Law</option>
+                            <option>Other</option>
+                        </select>
                     </div>
-                    <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-md transition">
-                        Send Your Query
-                    </button>
-                </form>
+                    <div>
+                        <label>Brief Description of Your Matter</label>
+                        <textarea placeholder="Describe your legal issue briefly. All information is strictly confidential."></textarea>
+                    </div>
+                    <div>
+                        <label>Preferred Time for Callback</label>
+                        <input type="text" placeholder="e.g. Weekday mornings, Saturday afternoon">
+                    </div>
+                    <button class="btn btn--primary" style="width:100%;justify-content:center;">Send Your Query →</button>
+                    <p class="form__note">🔒 All communications are strictly confidential and protected by attorney-client privilege. Your details will never be shared with any third party.</p>
+                </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- Footer -->
-    <!-- Legal Guide: LLP Registration -->
-    <section id="llp-guide" class="py-16 bg-white">
-        <div class="max-w-5xl mx-auto px-4">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl font-bold text-slate-900">Legal Guide: Registering an LLP in India</h2>
-                <div class="w-20 h-1 bg-blue-600 mx-auto mt-4"></div>
-                <p class="mt-4 text-slate-600 max-w-2xl mx-auto">A complete step-by-step guide to registering a Limited Liability Partnership (LLP) for a Law Firm.</p>
-            </div>
-            
-            <div class="grid md:grid-cols-2 gap-6">
-                <!-- Step 1 & 2 -->
-                <div class="p-6 bg-slate-50 border-l-4 border-blue-600 rounded-r-lg shadow-sm">
-                    <h3 class="font-bold text-lg text-blue-900 mb-2">1. Planning & 2. Digital Signature</h3>
-                    <p class="text-slate-700 text-sm">Choose the LLP name, partners (minimum 2), designated partners, office address, and ensure compliance with Bar Council rules. Each designated partner needs a Class 3 DSC, PAN, Aadhaar, photo, email, and mobile.</p>
-                </div>
-                
-                <!-- Step 3 & 4 -->
-                <div class="p-6 bg-slate-50 border-l-4 border-blue-600 rounded-r-lg shadow-sm">
-                    <h3 class="font-bold text-lg text-blue-900 mb-2">3. Name Reservation & 4. Incorporation</h3>
-                    <p class="text-slate-700 text-sm">Search the MCA database to avoid identical names and consider trademark availability. Prepare the FILLIP with partner details, office proof, NOC, business object, and DIN allotment if needed.</p>
-                </div>
-
-                <!-- Step 5 & 6 -->
-                <div class="p-6 bg-slate-50 border-l-4 border-blue-600 rounded-r-lg shadow-sm">
-                    <h3 class="font-bold text-lg text-blue-900 mb-2">5. Documents & 6. LLP Agreement</h3>
-                    <p class="text-slate-700 text-sm">Gather PAN, Aadhaar, address proof, photo, and rent agreement/NOC. Execute the LLP Agreement within incorporation, including capital, profit ratio, dispute resolution, and dissolution rules.</p>
-                </div>
-
-                <!-- Step 7, 8 & 9 -->
-                <div class="p-6 bg-slate-50 border-l-4 border-blue-600 rounded-r-lg shadow-sm">
-                    <h3 class="font-bold text-lg text-blue-900 mb-2">7. MCA Filing & 8. PAN/TAN/Bank</h3>
-                    <p class="text-slate-700 text-sm">File Form 3 within 30 days after incorporation. Obtain PAN/TAN, open a bank account using the COI, PAN, LLP Agreement, and KYC. Register for GST if applicable.</p>
-                </div>
-            </div>
-
-            <!-- Step 10 & Tips -->
-            <div class="mt-6 p-6 bg-blue-50 border-l-4 border-blue-900 rounded-r-lg shadow-sm">
-                <h3 class="font-bold text-lg text-blue-900 mb-2">10. Annual Compliance & Practical Tips</h3>
-                <p class="text-slate-700 text-sm">Maintain books, file Form 11, Form 8, Income Tax Return, and comply with TDS/GST[cite: 3]. Keep digital records, use professional email, draft engagement letters, maintain client confidentiality, and consider professional indemnity insurance[cite: 3].</p>
-            </div>
+<!-- ═══════════════════════════════════════
+     FOOTER
+═══════════════════════════════════════ -->
+<footer class="footer">
+    <div class="footer__grid">
+        <div>
+            <div class="footer__brand">FAITH<span> LAW FIRM</span></div>
+            <p class="footer__tagline">A Delhi-based full-service legal chamber committed to protecting your rights, resolving disputes, and delivering justice — with integrity and conviction.</p>
+            <p style="font-size:.82rem;color:rgba(255,255,255,.4);">✉ info@faithlawfirm.com<br>📞 +91-XXXXXXXXXX</p>
         </div>
-    </section>
-    </footer>
+        <div class="footer__col">
+            <h4>Quick Links</h4>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#practice-areas">Practice Areas</a></li>
+                <li><a href="#team">Team</a></li>
+                <li><a href="#testimonials">Testimonials</a></li>
+                <li><a href="#join">Join Us</a></li>
+                <li><a href="#resources">Resources</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+        <div class="footer__col">
+            <h4>Practice Areas</h4>
+            <ul>
+                <li><a href="#practice-areas">IPR & Litigation</a></li>
+                <li><a href="#practice-areas">International Trademark</a></li>
+                <li><a href="#practice-areas">Arbitration</a></li>
+                <li><a href="#practice-areas">Civil Litigation</a></li>
+                <li><a href="#practice-areas">Commercial Suits</a></li>
+                <li><a href="#practice-areas">Family Issues</a></li>
+                <li><a href="#practice-areas">Criminal Matters</a></li>
+                <li><a href="#practice-areas">Consumer Court</a></li>
+                <li><a href="#practice-areas">Banking Law</a></li>
+            </ul>
+        </div>
+        <div class="footer__col">
+            <h4>Office Hours</h4>
+            <ul>
+                <li><a href="#">Monday – Saturday</a></li>
+                <li><a href="#">10:00 AM – 6:00 PM</a></li>
+            </ul>
+            <h4 style="margin-top:1.5rem;">Follow Us</h4>
+            <ul>
+                <li><a href="#">LinkedIn</a></li>
+                <li><a href="#">Facebook</a></li>
+                <li><a href="#">Instagram</a></li>
+                <li><a href="#">Twitter / X</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer__bottom">
+        <p>© 2025 Faith Law Firm. All Rights Reserved.</p>
+        <p>Protecting Your Rights, Securing Your Future.</p>
+    </div>
+    <p class="footer__disclaimer">Disclaimer: The content on this website is for informational purposes only and does not constitute legal advice. Viewing this website or contacting Faith Law Firm does not create an advocate-client relationship. Please consult a qualified advocate for advice specific to your matter.</p>
+</footer>
 
 </body>
 </html>
