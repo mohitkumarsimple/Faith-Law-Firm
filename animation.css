@@ -1,237 +1,933 @@
 /* ==========================================================================
-   FAITH LAW FIRM - PREMIUM ANIMATIONS
+   FAITH LAW FIRM — MODERN MOTION SYSTEM
+   Compatible with the current index.html
    ========================================================================== */
 
-/* ── KEYFRAMES ── */
+/* --------------------------------------------------------------------------
+   DESIGN TOKENS
+   -------------------------------------------------------------------------- */
+:root {
+    --motion-fast: 180ms;
+    --motion-base: 320ms;
+    --motion-slow: 700ms;
+    --ease-out: cubic-bezier(.22, 1, .36, 1);
+    --ease-spring: cubic-bezier(.34, 1.56, .64, 1);
+    --ease-smooth: cubic-bezier(.4, 0, .2, 1);
 
-/* Smooth fade and slide up for text */
-@keyframes fadeInUp {
+    --shadow-soft: 0 10px 30px rgba(15, 31, 61, .08);
+    --shadow-medium: 0 18px 45px rgba(15, 31, 61, .14);
+    --shadow-strong: 0 28px 70px rgba(8, 18, 42, .22);
+
+    --glass-bg: rgba(255, 255, 255, .08);
+    --glass-border: rgba(255, 255, 255, .16);
+}
+
+/* --------------------------------------------------------------------------
+   KEYFRAMES
+   -------------------------------------------------------------------------- */
+@keyframes fadeRise {
     0% {
         opacity: 0;
-        transform: translateY(30px);
+        transform: translateY(34px) scale(.985);
+        filter: blur(8px);
     }
     100% {
         opacity: 1;
-        transform: translateY(0);
+        transform: translateY(0) scale(1);
+        filter: blur(0);
     }
 }
 
-/* Elegant fade and slide in from the left */
-@keyframes fadeInLeft {
+@keyframes fadeLeft {
     0% {
         opacity: 0;
-        transform: translateX(-40px);
+        transform: translateX(-42px);
+        filter: blur(6px);
     }
     100% {
         opacity: 1;
         transform: translateX(0);
+        filter: blur(0);
     }
 }
 
-/* Elegant fade and slide in from the right */
-@keyframes fadeInRight {
+@keyframes fadeRight {
     0% {
         opacity: 0;
-        transform: translateX(40px);
+        transform: translateX(42px);
+        filter: blur(6px);
     }
     100% {
         opacity: 1;
         transform: translateX(0);
+        filter: blur(0);
     }
 }
 
-/* Emblem scale and rotate */
 @keyframes sealReveal {
     0% {
         opacity: 0;
-        transform: scale(0.8) rotate(-15deg);
+        transform: scale(.72) rotate(-18deg);
+        filter: blur(10px);
+    }
+    70% {
+        opacity: 1;
+        transform: scale(1.04) rotate(2deg);
+        filter: blur(0);
     }
     100% {
         opacity: 1;
-        transform: scale(1) rotate(0deg);
+        transform: scale(1) rotate(0);
     }
 }
 
-/* Continuous slow float for the emblem */
-@keyframes float {
+@keyframes floatSeal {
+    0%, 100% {
+        transform: translateY(0) rotate(0);
+    }
+    50% {
+        transform: translateY(-12px) rotate(1.5deg);
+    }
+}
+
+@keyframes ringPulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: .35;
+    }
+    50% {
+        transform: scale(1.055);
+        opacity: .65;
+    }
+}
+
+@keyframes shimmer {
+    0% {
+        transform: translateX(-140%) skewX(-20deg);
+    }
+    55%, 100% {
+        transform: translateX(240%) skewX(-20deg);
+    }
+}
+
+@keyframes glowPulse {
+    0%, 100% {
+        box-shadow: 0 0 0 rgba(184, 147, 63, 0);
+    }
+    50% {
+        box-shadow: 0 0 28px rgba(184, 147, 63, .25);
+    }
+}
+
+@keyframes gradientDrift {
+    0% {
+        transform: translate3d(-3%, -2%, 0) scale(1);
+    }
+    50% {
+        transform: translate3d(3%, 2%, 0) scale(1.06);
+    }
+    100% {
+        transform: translate3d(-3%, -2%, 0) scale(1);
+    }
+}
+
+@keyframes lineGrow {
+    0% {
+        transform: scaleX(0);
+        transform-origin: left;
+    }
+    100% {
+        transform: scaleX(1);
+        transform-origin: left;
+    }
+}
+
+@keyframes softBounce {
     0%, 100% {
         transform: translateY(0);
     }
     50% {
-        transform: translateY(-10px);
+        transform: translateY(-5px);
     }
 }
 
-/* Button shine sweep */
-@keyframes shine {
-    0% {
-        left: -100%;
-    }
-    20% {
-        left: 100%;
-    }
-    100% {
-        left: 100%;
-    }
+/* --------------------------------------------------------------------------
+   GLOBAL POLISH
+   -------------------------------------------------------------------------- */
+body {
+    overflow-x: hidden;
 }
 
+::selection {
+    background: rgba(184, 147, 63, .25);
+    color: var(--navy);
+}
 
-/* ── ON-LOAD HERO ANIMATIONS ── */
-/* Targets the top section elements to animate as soon as the page loads */
+a,
+button,
+input,
+textarea,
+select,
+.practice__card,
+.team__card,
+.testimonial__card,
+.blog__item,
+.pub__item,
+.join__card,
+.contact__panel,
+.contact__form-card,
+.about__card {
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* --------------------------------------------------------------------------
+   NAVBAR
+   -------------------------------------------------------------------------- */
+.nav {
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    background: rgba(15, 31, 61, .92);
+    box-shadow: 0 8px 24px rgba(8, 18, 42, .16);
+}
+
+.nav__brand {
+    transition:
+        transform var(--motion-base) var(--ease-out),
+        letter-spacing var(--motion-base) var(--ease-out);
+}
+
+.nav__brand:hover {
+    transform: translateY(-1px);
+    letter-spacing: .085em;
+}
+
+.nav__brand span {
+    transition:
+        color var(--motion-base) ease,
+        text-shadow var(--motion-base) ease;
+}
+
+.nav__brand:hover span {
+    color: var(--brass-lt);
+    text-shadow: 0 0 18px rgba(184, 147, 63, .55);
+}
+
+.nav__links a {
+    position: relative;
+    transition:
+        color var(--motion-base) ease,
+        transform var(--motion-base) var(--ease-out);
+}
+
+.nav__links a:hover {
+    transform: translateY(-2px);
+}
+
+.nav__links a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -6px;
+    width: 100%;
+    height: 2px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--brass), var(--brass-lt));
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform var(--motion-base) var(--ease-out);
+}
+
+.nav__links a:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+}
+
+.nav__toggle span {
+    transform-origin: center;
+    transition:
+        transform var(--motion-base) var(--ease-out),
+        opacity var(--motion-base) ease,
+        background-color var(--motion-base) ease;
+}
+
+.nav__toggle:hover span {
+    background-color: var(--brass);
+}
+
+.nav__mobile {
+    animation: fadeRise .32s var(--ease-out) both;
+    box-shadow: 0 20px 45px rgba(8, 18, 42, .28);
+}
+
+/* --------------------------------------------------------------------------
+   HERO
+   -------------------------------------------------------------------------- */
+.hero::before {
+    animation: gradientDrift 12s ease-in-out infinite;
+}
+
+.hero::after {
+    content: "";
+    position: absolute;
+    inset: auto -15% -40% auto;
+    width: 520px;
+    height: 520px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(184,147,63,.12), transparent 68%);
+    filter: blur(8px);
+    animation: gradientDrift 14s ease-in-out infinite reverse;
+    pointer-events: none;
+}
 
 .hero__text .eyebrow {
-    animation: fadeInUp 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+    opacity: 0;
+    animation: fadeRise .75s var(--ease-out) .05s forwards;
 }
 
 .hero__title {
     opacity: 0;
-    animation: fadeInUp 1s cubic-bezier(0.25, 1, 0.5, 1) 0.2s forwards;
+    animation: fadeRise .95s var(--ease-out) .18s forwards;
+}
+
+.hero__title em {
+    position: relative;
+    display: inline-block;
+}
+
+.hero__title em::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -.08em;
+    width: 100%;
+    height: 3px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, transparent, var(--brass), transparent);
+    transform: scaleX(0);
+    animation: lineGrow .9s var(--ease-out) 1.05s forwards;
 }
 
 .hero__desc {
     opacity: 0;
-    animation: fadeInUp 1s cubic-bezier(0.25, 1, 0.5, 1) 0.4s forwards;
+    animation: fadeRise .95s var(--ease-out) .34s forwards;
 }
 
 .hero__ctas {
     opacity: 0;
-    animation: fadeInUp 1s cubic-bezier(0.25, 1, 0.5, 1) 0.6s forwards;
+    animation: fadeRise .95s var(--ease-out) .5s forwards;
 }
 
 .hero__emblem {
     opacity: 0;
-    animation: sealReveal 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) 0.4s forwards;
+    animation: sealReveal 1.15s var(--ease-spring) .35s forwards;
 }
 
 .hero__seal {
-    /* Adds a continuous floating effect after the initial reveal */
-    animation: float 6s ease-in-out infinite 1.6s; 
+    animation: floatSeal 6.5s ease-in-out 1.5s infinite;
+    box-shadow:
+        0 0 0 1px rgba(184,147,63,.16),
+        0 0 40px rgba(184,147,63,.12),
+        inset 0 0 40px rgba(184,147,63,.06);
+    transition:
+        transform var(--motion-slow) var(--ease-spring),
+        box-shadow var(--motion-slow) ease;
 }
 
+.hero__seal:hover {
+    transform: translateY(-8px) scale(1.035) rotate(2deg);
+    box-shadow:
+        0 0 0 1px rgba(184,147,63,.28),
+        0 0 60px rgba(184,147,63,.22),
+        inset 0 0 48px rgba(184,147,63,.1);
+}
 
-/* ── INTERACTIVE HOVER EFFECTS ── */
+.hero__seal-ring {
+    animation: ringPulse 3.8s ease-in-out infinite;
+}
 
-/* Buttons */
+.hero__stat-num {
+    transition:
+        transform var(--motion-base) var(--ease-spring),
+        text-shadow var(--motion-base) ease;
+}
+
+.hero__stats > div:hover .hero__stat-num {
+    transform: translateY(-4px) scale(1.08);
+    text-shadow: 0 6px 18px rgba(184,147,63,.25);
+}
+
+/* --------------------------------------------------------------------------
+   BUTTONS
+   -------------------------------------------------------------------------- */
 .btn {
     position: relative;
     overflow: hidden;
+    isolation: isolate;
     transform: translateY(0);
-    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+    transition:
+        transform var(--motion-base) var(--ease-out),
+        box-shadow var(--motion-base) ease,
+        border-color var(--motion-base) ease,
+        background-color var(--motion-base) ease,
+        color var(--motion-base) ease;
+}
+
+.btn::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        110deg,
+        transparent 20%,
+        rgba(255,255,255,.32) 48%,
+        transparent 76%
+    );
+    transform: translateX(-140%) skewX(-20deg);
+    z-index: -1;
+}
+
+.btn:hover::before {
+    animation: shimmer .9s var(--ease-out);
 }
 
 .btn:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-medium);
+}
+
+.btn:active {
+    transform: translateY(-1px) scale(.985);
+}
+
+.btn--primary {
+    animation: glowPulse 4.5s ease-in-out infinite;
+}
+
+.btn--outline:hover {
+    background: rgba(255,255,255,.09);
+}
+
+/* --------------------------------------------------------------------------
+   SECTION HEADERS
+   -------------------------------------------------------------------------- */
+.section-header .eyebrow,
+.section-header .headline,
+.section-header .body-lg,
+.section-header .rule {
+    transition:
+        transform var(--motion-base) var(--ease-out),
+        opacity var(--motion-base) ease;
+}
+
+.section-header:hover .eyebrow {
+    transform: translateY(-2px);
+}
+
+.section-header:hover .headline {
     transform: translateY(-3px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
 }
 
-.btn::after {
-    content: '';
+.rule {
+    position: relative;
+    overflow: hidden;
+}
+
+.rule::after {
+    content: "";
     position: absolute;
-    top: 0;
-    left: -100%;
-    width: 50%;
-    height: 100%;
-    background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0) 100%);
-    transform: skewX(-25deg);
-    animation: shine 4s infinite;
+    inset: 0;
+    background: linear-gradient(90deg, transparent, #fff, transparent);
+    transform: translateX(-130%);
 }
 
-/* Practice Area Cards */
+.section-header:hover .rule::after {
+    animation: shimmer 1s var(--ease-out);
+}
+
+/* --------------------------------------------------------------------------
+   ABOUT CARDS
+   -------------------------------------------------------------------------- */
+.about__card {
+    position: relative;
+    overflow: hidden;
+    transition:
+        transform var(--motion-base) var(--ease-out),
+        box-shadow var(--motion-base) ease,
+        border-color var(--motion-base) ease;
+}
+
+.about__card::before {
+    content: "";
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 4px;
+    background: linear-gradient(180deg, var(--brass), var(--maroon));
+    transform: scaleY(0);
+    transform-origin: bottom;
+    transition: transform var(--motion-base) var(--ease-out);
+}
+
+.about__card:hover {
+    transform: translateX(8px);
+    box-shadow: var(--shadow-soft);
+    border-color: rgba(184,147,63,.55);
+}
+
+.about__card:hover::before {
+    transform: scaleY(1);
+}
+
+/* --------------------------------------------------------------------------
+   PRACTICE AREA CARDS
+   -------------------------------------------------------------------------- */
 .practice__card {
-    transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), border-color 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    transition:
+        transform var(--motion-base) var(--ease-out),
+        box-shadow var(--motion-base) ease,
+        border-color var(--motion-base) ease;
+}
+
+.practice__card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(circle at top right, rgba(184,147,63,.16), transparent 42%),
+        linear-gradient(145deg, rgba(255,255,255,.45), transparent);
+    opacity: 0;
+    transition: opacity var(--motion-base) ease;
+    z-index: -1;
+}
+
+.practice__card::after {
+    content: "";
+    position: absolute;
+    inset: auto -35% -45% auto;
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    background: rgba(122,28,46,.07);
+    transform: scale(.5);
+    transition: transform var(--motion-slow) var(--ease-out);
+    z-index: -1;
 }
 
 .practice__card:hover {
-    transform: translateY(-8px) scale(1.02);
-    box-shadow: 0 15px 35px rgba(15, 31, 61, 0.1);
+    transform: translateY(-10px) scale(1.015);
+    box-shadow: var(--shadow-medium);
     border-top-color: var(--maroon);
 }
 
-.practice__card .practice__icon {
-    transition: transform 0.3s ease;
+.practice__card:hover::before {
+    opacity: 1;
+}
+
+.practice__card:hover::after {
+    transform: scale(1.35);
+}
+
+.practice__icon {
+    display: inline-block;
+    transition:
+        transform var(--motion-base) var(--ease-spring),
+        filter var(--motion-base) ease;
 }
 
 .practice__card:hover .practice__icon {
-    transform: scale(1.2) rotate(5deg);
+    transform: translateY(-3px) scale(1.18) rotate(4deg);
+    filter: drop-shadow(0 8px 10px rgba(15,31,61,.15));
 }
 
-/* Team Cards */
+/* --------------------------------------------------------------------------
+   FOUNDER
+   -------------------------------------------------------------------------- */
+.founder__portrait {
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--shadow-soft);
+    transition:
+        transform var(--motion-slow) var(--ease-spring),
+        box-shadow var(--motion-slow) ease;
+}
+
+.founder__portrait::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        120deg,
+        transparent 30%,
+        rgba(255,255,255,.16) 50%,
+        transparent 70%
+    );
+    transform: translateX(-140%);
+}
+
+.founder__portrait:hover {
+    transform: translateY(-8px) scale(1.015);
+    box-shadow: var(--shadow-medium);
+}
+
+.founder__portrait:hover::after {
+    animation: shimmer 1.1s var(--ease-out);
+}
+
+.founder__badge {
+    transition:
+        transform var(--motion-base) var(--ease-spring),
+        box-shadow var(--motion-base) ease;
+}
+
+.founder__badge:hover {
+    transform: translateY(-3px) rotate(-1deg);
+    box-shadow: 0 10px 24px rgba(184,147,63,.22);
+}
+
+/* --------------------------------------------------------------------------
+   TEAM CARDS
+   -------------------------------------------------------------------------- */
 .team__card {
-    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    position: relative;
+    overflow: hidden;
+    transition:
+        transform var(--motion-base) var(--ease-out),
+        box-shadow var(--motion-base) ease,
+        border-color var(--motion-base) ease;
+}
+
+.team__card::before {
+    content: "";
+    position: absolute;
+    inset: auto 0 0;
+    height: 0;
+    background: linear-gradient(180deg, transparent, rgba(15,31,61,.055));
+    transition: height var(--motion-base) var(--ease-out);
 }
 
 .team__card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-medium);
+    border-bottom-color: var(--brass);
 }
 
-.team__card .team__avatar {
-    transition: background-color 0.3s ease, color 0.3s ease, transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+.team__card:hover::before {
+    height: 100%;
+}
+
+.team__avatar {
+    position: relative;
+    transition:
+        transform var(--motion-base) var(--ease-spring),
+        background-color var(--motion-base) ease,
+        color var(--motion-base) ease,
+        box-shadow var(--motion-base) ease;
 }
 
 .team__card:hover .team__avatar {
-    background-color: var(--brass);
+    transform: scale(1.12) rotate(4deg);
+    background: var(--brass);
     color: var(--navy);
-    transform: scale(1.1);
+    box-shadow: 0 12px 28px rgba(184,147,63,.25);
 }
 
-/* Testimonial Cards */
+/* --------------------------------------------------------------------------
+   TESTIMONIALS
+   -------------------------------------------------------------------------- */
 .testimonial__card {
-    transition: background-color 0.3s ease, transform 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+    transition:
+        transform var(--motion-base) var(--ease-out),
+        background-color var(--motion-base) ease,
+        border-color var(--motion-base) ease,
+        box-shadow var(--motion-base) ease;
+}
+
+.testimonial__card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at top left, rgba(184,147,63,.14), transparent 42%);
+    opacity: 0;
+    transition: opacity var(--motion-base) ease;
 }
 
 .testimonial__card:hover {
-    background-color: rgba(255,255,255,0.12);
-    transform: translateX(5px);
+    transform: translateY(-7px) translateX(4px);
+    background-color: rgba(255,255,255,.11);
+    border-color: rgba(184,147,63,.5);
+    box-shadow: 0 22px 50px rgba(0,0,0,.18);
 }
 
-/* Blog & Publication Items */
+.testimonial__card:hover::after {
+    opacity: 1;
+}
+
+/* --------------------------------------------------------------------------
+   JOIN US CARDS
+   -------------------------------------------------------------------------- */
+.join__card {
+    position: relative;
+    overflow: hidden;
+    transition:
+        transform var(--motion-base) var(--ease-out),
+        box-shadow var(--motion-base) ease,
+        border-color var(--motion-base) ease;
+}
+
+.join__card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(184,147,63,.08), transparent 55%);
+    opacity: 0;
+    transition: opacity var(--motion-base) ease;
+}
+
+.join__card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-medium);
+}
+
+.join__card:hover::before {
+    opacity: 1;
+}
+
+.join__list li {
+    transition:
+        transform var(--motion-fast) ease,
+        color var(--motion-fast) ease;
+}
+
+.join__list li:hover {
+    transform: translateX(5px);
+    color: var(--navy);
+}
+
+/* --------------------------------------------------------------------------
+   RESOURCES
+   -------------------------------------------------------------------------- */
 .blog__item {
-    transition: padding-left 0.3s ease, background-color 0.3s ease;
-    border-radius: 4px;
+    position: relative;
+    overflow: hidden;
+    transition:
+        transform var(--motion-base) var(--ease-out),
+        background-color var(--motion-base) ease,
+        box-shadow var(--motion-base) ease,
+        padding-left var(--motion-base) var(--ease-out);
+}
+
+.blog__item::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 20%;
+    bottom: 20%;
+    width: 3px;
+    border-radius: 999px;
+    background: linear-gradient(180deg, var(--brass), var(--maroon));
+    transform: scaleY(0);
+    transition: transform var(--motion-base) var(--ease-out);
 }
 
 .blog__item:hover {
+    transform: translateX(6px);
     padding-left: 1rem;
-    background-color: var(--white);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-    border-bottom-color: transparent;
+    background: rgba(255,255,255,.72);
+    box-shadow: var(--shadow-soft);
+}
+
+.blog__item:hover::before {
+    transform: scaleY(1);
+}
+
+.blog__num {
+    transition:
+        transform var(--motion-base) var(--ease-spring),
+        color var(--motion-base) ease;
+}
+
+.blog__item:hover .blog__num {
+    transform: scale(1.12);
+    color: var(--maroon);
 }
 
 .pub__item {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    transition:
+        transform var(--motion-base) var(--ease-out),
+        box-shadow var(--motion-base) ease,
+        border-color var(--motion-base) ease;
+}
+
+.pub__item::after {
+    content: "↗";
+    position: absolute;
+    right: 1.2rem;
+    top: 1.1rem;
+    color: var(--brass);
+    opacity: 0;
+    transform: translate(-8px, 8px);
+    transition:
+        opacity var(--motion-base) ease,
+        transform var(--motion-base) var(--ease-out);
 }
 
 .pub__item:hover {
     transform: translateX(10px);
-    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    box-shadow: var(--shadow-soft);
+    border-left-color: var(--brass);
 }
 
-/* Navbar Links */
-.nav__links a {
+.pub__item:hover::after {
+    opacity: 1;
+    transform: translate(0, 0);
+}
+
+/* --------------------------------------------------------------------------
+   CONTACT
+   -------------------------------------------------------------------------- */
+.contact__panel,
+.contact__form-card {
+    transition:
+        transform var(--motion-base) var(--ease-out),
+        box-shadow var(--motion-base) ease,
+        border-color var(--motion-base) ease;
+}
+
+.contact__panel:hover,
+.contact__form-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-medium);
+    border-color: rgba(184,147,63,.5);
+}
+
+.contact__info-item {
+    transition:
+        transform var(--motion-fast) ease,
+        background-color var(--motion-fast) ease;
+}
+
+.contact__info-item:hover {
+    transform: translateX(5px);
+}
+
+.contact__icon {
+    transition:
+        transform var(--motion-base) var(--ease-spring),
+        background-color var(--motion-base) ease,
+        box-shadow var(--motion-base) ease;
+}
+
+.contact__info-item:hover .contact__icon {
+    transform: scale(1.12) rotate(4deg);
+    background: rgba(184,147,63,.22);
+    box-shadow: 0 10px 22px rgba(184,147,63,.18);
+}
+
+.form input,
+.form textarea,
+.form select {
+    transition:
+        border-color var(--motion-base) ease,
+        box-shadow var(--motion-base) ease,
+        transform var(--motion-fast) ease,
+        background-color var(--motion-base) ease;
+}
+
+.form input:hover,
+.form textarea:hover,
+.form select:hover {
+    transform: translateY(-1px);
+    border-color: rgba(184,147,63,.55);
+}
+
+.form input:focus,
+.form textarea:focus,
+.form select:focus {
+    transform: translateY(-2px);
+}
+
+/* --------------------------------------------------------------------------
+   FOOTER
+   -------------------------------------------------------------------------- */
+.footer__brand {
+    transition:
+        transform var(--motion-base) var(--ease-out),
+        text-shadow var(--motion-base) ease;
+}
+
+.footer__brand:hover {
+    transform: translateY(-2px);
+    text-shadow: 0 0 18px rgba(184,147,63,.2);
+}
+
+.footer__col ul a {
     position: relative;
+    display: inline-block;
+    transition:
+        color var(--motion-base) ease,
+        transform var(--motion-base) var(--ease-out);
 }
 
-.nav__links a::after {
-    content: '';
-    position: absolute;
-    bottom: -4px;
-    left: 0;
-    width: 0%;
-    height: 2px;
-    background-color: var(--brass);
-    transition: width 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+.footer__col ul a:hover {
+    transform: translateX(5px);
 }
 
-.nav__links a:hover::after {
-    width: 100%;
+/* --------------------------------------------------------------------------
+   RESPONSIVE MOTION
+   -------------------------------------------------------------------------- */
+@media (max-width: 900px) {
+    .hero__text .eyebrow,
+    .hero__title,
+    .hero__desc,
+    .hero__ctas {
+        animation-duration: .75s;
+    }
+
+    .practice__card:hover,
+    .team__card:hover,
+    .join__card:hover,
+    .contact__panel:hover,
+    .contact__form-card:hover {
+        transform: translateY(-5px);
+    }
 }
 
-/* Brand Name Pulsing */
-.nav__brand span {
-    transition: text-shadow 0.3s ease;
+@media (hover: none) {
+    .practice__card:hover,
+    .team__card:hover,
+    .testimonial__card:hover,
+    .join__card:hover,
+    .pub__item:hover,
+    .blog__item:hover,
+    .contact__panel:hover,
+    .contact__form-card:hover,
+    .about__card:hover {
+        transform: none;
+        box-shadow: inherit;
+    }
+
+    .btn:hover {
+        transform: none;
+    }
 }
 
-.nav__brand:hover span {
-    text-shadow: 0 0 10px rgba(184, 147, 63, 0.6);
+/* --------------------------------------------------------------------------
+   ACCESSIBILITY
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: .01ms !important;
+    }
 }
